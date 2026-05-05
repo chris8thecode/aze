@@ -21,12 +21,13 @@ src/
 │   ├── registry.ts            name + alias resolution
 │   ├── loader.ts              filesystem auto-discovery
 │   └── modules/
-│       ├── general/           ping, help, echo, uptime
-│       ├── anime/             waifu, maid, uniform, animeinfo, character
-│       ├── group/             tagall, groupinfo
-│       ├── moderation/        promote, demote, remove, setname, setdesc
+│       ├── general/           ping, help, echo, uptime, weather, wiki, crypto, github, urban
+│       ├── anime/             waifu, maid, uniform, neko, animeinfo, character
+│       ├── group/             tagall, groupinfo, invitelink, revoke
+│       ├── moderation/        promote, demote, remove, setname, setdesc, warn, purge, selfpurge
 │       ├── media/             sticker
-│       └── owner/             shutdown, restart, broadcast, ban, unban, banlist
+│       └── owner/             shutdown, restart, broadcast, ban, unban, banlist,
+│                              groups, leave, update, logs, stats
 ├── middleware/
 │   ├── pipeline.ts            koa-style composition
 │   ├── logger.ts              command timing + error capture
@@ -34,18 +35,26 @@ src/
 │   ├── ratelimit.ts           per-(command, user) cooldown
 │   └── permission.ts          owner / admin / group / private gates
 ├── events/
-│   ├── messages.ts            messages.upsert dispatcher + chat tracker
+│   ├── messages.ts            messages.upsert dispatcher + chat / message cache
 │   ├── connection.ts          QR, open/close, reconnect signal
 │   ├── groups.ts              welcome + group upsert
 │   └── calls.ts               auto-reject incoming calls
 ├── services/
 │   ├── http.ts                fetch wrapper for JSON + binary
 │   ├── waifu.ts               waifu.im (SFW only)
-│   └── jikan.ts               jikan.moe v4 (anime + character search)
+│   ├── neko.ts                nekos.best
+│   ├── jikan.ts               jikan.moe v4 (anime + character search)
+│   ├── weather.ts             open-meteo geocode + forecast
+│   ├── wiki.ts                wikipedia REST summary
+│   ├── github.ts              github user / repo metadata
+│   ├── crypto.ts              coingecko market data
+│   └── urban.ts               urban dictionary
 ├── state/
 │   ├── store.ts               atomic JSON-file persistence
 │   ├── blacklist.ts           ban list (phone-keyed)
-│   └── chats.ts               known-chats tracker for broadcast
+│   ├── chats.ts               known-chats tracker for broadcast
+│   ├── messages-cache.ts      in-memory ring buffer for purge / selfpurge
+│   └── warns.ts               group warning counts with auto-remove threshold
 └── utils/                     jid, targets, text, time helpers
 ```
 
@@ -53,12 +62,12 @@ src/
 
 | category | commands |
 |---|---|
-| general | `ping`, `help`, `echo`, `uptime` |
-| anime | `waifu`, `maid`, `uniform`, `animeinfo`, `character` |
-| group | `tagall`, `groupinfo` |
-| moderation | `promote`, `demote`, `remove`, `setname`, `setdesc` |
+| general | `ping`, `help`, `echo`, `uptime`, `weather`, `wiki`, `crypto`, `github`, `urban` |
+| anime | `waifu`, `maid`, `uniform`, `neko`, `animeinfo`, `character` |
+| group | `tagall`, `groupinfo`, `invitelink`, `revoke` |
+| moderation | `promote`, `demote`, `remove`, `setname`, `setdesc`, `warn`, `purge`, `selfpurge` |
 | media | `sticker` |
-| owner | `shutdown`, `restart`, `broadcast`, `ban`, `unban`, `banlist` |
+| owner | `shutdown`, `restart`, `broadcast`, `ban`, `unban`, `banlist`, `groups`, `leave`, `update`, `logs`, `stats` |
 
 ## Setup
 
