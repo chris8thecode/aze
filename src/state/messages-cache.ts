@@ -7,7 +7,7 @@ export interface CachedKey {
   timestamp: number
 }
 
-const MAX_PER_CHAT = 200
+const MAX_PER_CHAT = 1000
 
 const buckets = new Map<string, CachedKey[]>()
 
@@ -17,6 +17,10 @@ export const messagesCache = {
     list.push({ key, fromMe, participant, timestamp: Date.now() })
     if (list.length > MAX_PER_CHAT) list.splice(0, list.length - MAX_PER_CHAT)
     buckets.set(chat, list)
+  },
+
+  size(chat: string): number {
+    return buckets.get(chat)?.length ?? 0
   },
 
   recent(
