@@ -2,7 +2,7 @@ import { defineCommand } from '../../types.js'
 
 export default defineCommand({
   name: 'echo',
-  category: 'general',
+  category: 'owner',
   description: 'Repeat the given text back.',
   usage: 'echo <text>',
   permission: 'owner',

@@ -21,12 +21,12 @@ src/
 │   ├── registry.ts            name + alias resolution
 │   ├── loader.ts              filesystem auto-discovery
 │   └── modules/
-│       ├── general/           ping, help, echo, uptime, weather, wiki, crypto, github, urban
+│       ├── general/           ping, help, uptime, weather, wiki, crypto, github, urban
 │       ├── anime/             waifu, maid, uniform, neko, animeinfo, character
 │       ├── group/             tagall, groupinfo, invitelink, revoke
 │       ├── moderation/        promote, demote, remove, setname, setdesc, warn, purge, selfpurge
 │       ├── media/             sticker
-│       └── owner/             shutdown, restart, broadcast, ban, unban, banlist,
+│       └── owner/             shutdown, restart, echo, broadcast, ban, unban, banlist,
 │                              groups, leave, update, logs, stats
 ├── middleware/
 │   ├── pipeline.ts            koa-style composition
@@ -62,12 +62,12 @@ src/
 
 | category | commands |
 |---|---|
-| general | `ping`, `help`, `echo`, `uptime`, `weather`, `wiki`, `crypto`, `github`, `urban` |
+| general | `ping`, `help`, `uptime`, `weather`, `wiki`, `crypto`, `github`, `urban` |
 | anime | `waifu`, `maid`, `uniform`, `neko`, `animeinfo`, `character` |
 | group | `tagall`, `groupinfo`, `invitelink`, `revoke` |
 | moderation | `promote`, `demote`, `remove`, `setname`, `setdesc`, `warn`, `purge`, `selfpurge` |
 | media | `sticker` |
-| owner | `shutdown`, `restart`, `broadcast`, `ban`, `unban`, `banlist`, `groups`, `leave`, `update`, `logs`, `stats` |
+| owner | `shutdown`, `restart`, `echo`, `broadcast`, `ban`, `unban`, `banlist`, `groups`, `leave`, `update`, `logs`, `stats` |
 
 ## Setup
 
