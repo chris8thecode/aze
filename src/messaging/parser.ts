@@ -1,6 +1,7 @@
 import {
   downloadMediaMessage,
   getContentType,
+  isLidUser,
   jidNormalizedUser,
   type WAMessage,
   type WAMessageContent,
@@ -75,6 +76,23 @@ const extractQuoted = (msg: WAMessage): WAMessage | undefined => {
   } as WAMessage
 }
 
+const resolveSenderPn = (msg: WAMessage, sock: WASocket): string => {
+  const key = msg.key
+  if (key.fromMe) {
+    const me = sock.user?.id
+    return me ? normalize(me) : ''
+  }
+  const inGroup = isGroup(key.remoteJid ?? '')
+  if (inGroup) {
+    const candidate = key.participantAlt ?? key.participant
+    if (candidate && !isLidUser(candidate)) return normalize(candidate)
+    return ''
+  }
+  const candidate = key.remoteJidAlt ?? key.remoteJid
+  if (candidate && !isLidUser(candidate)) return normalize(candidate)
+  return ''
+}
+
 export const parseMessage = (
   msg: WAMessage,
   sock: WASocket,
@@ -87,6 +105,7 @@ export const parseMessage = (
   const sender = normalize(
     fromMe ? msg.key.remoteJid : msg.key.participant ?? msg.key.remoteJid
   )
+  const senderPn = resolveSenderPn(msg, sock)
 
   const text = extractText(msg.message).trim()
   const hasPrefix = text.startsWith(prefix)
@@ -103,6 +122,7 @@ export const parseMessage = (
     id: msg.key.id ?? '',
     chat,
     sender,
+    senderPn,
     pushName: msg.pushName ?? undefined,
     fromMe,
     isGroup: isGroup(chat),

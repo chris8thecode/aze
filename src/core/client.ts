@@ -15,6 +15,7 @@ import { handleGroupParticipants, handleGroupsUpsert } from '../events/groups.js
 import { loadCommands } from '../commands/loader.js'
 import { Pipeline } from '../middleware/pipeline.js'
 import { logging } from '../middleware/logger.js'
+import { banGate } from '../middleware/blacklist.js'
 import { rateLimit } from '../middleware/ratelimit.js'
 import { permission } from '../middleware/permission.js'
 
@@ -24,7 +25,7 @@ export class Bot {
 
   async start(): Promise<void> {
     const registry = await loadCommands()
-    const pipeline = new Pipeline().use(logging, rateLimit(), permission)
+    const pipeline = new Pipeline().use(logging, banGate, rateLimit(), permission)
     await this.connect(async (sock) => {
       sock.ev.on('messages.upsert', handleMessages(sock, registry, pipeline))
       sock.ev.on('group-participants.update', handleGroupParticipants(sock))

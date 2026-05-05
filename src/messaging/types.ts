@@ -16,6 +16,7 @@ export interface ParsedMessage {
   id: string
   chat: string
   sender: string
+  senderPn: string
   pushName?: string
   fromMe: boolean
   isGroup: boolean
