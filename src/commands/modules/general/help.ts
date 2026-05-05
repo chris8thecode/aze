@@ -55,7 +55,7 @@ export default defineCommand({
 
     const categories = Object.entries(groups).sort(([a], [b]) => a.localeCompare(b))
     for (const [category, cmds] of categories) {
-      out.push(`*◆ ${category}*  _(${cmds.length})_`)
+      out.push(`*>> ${category}*  _(${cmds.length})_`)
       const sorted = [...cmds].sort((a, b) => a.name.localeCompare(b.name))
       for (const cmd of sorted) out.push(`  ›  *${prefix}${cmd.name}*  —  ${cmd.description}`)
       out.push('')
